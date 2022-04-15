@@ -12,6 +12,7 @@
 (function() {
     'use strict';
 
+
     const outputNames = () => {
 
         const title = document.querySelector('.aux-content-widget-2.links.subnav a').textContent;
@@ -20,6 +21,7 @@
 
         const $main = document.querySelector('.subpage_title_block');
         const $Temp = document.createElement('ul')
+        $Temp.classList.add('EpisodeList')
 
 
          Array.prototype.forEach.call($episodes, (episodeName, key) => {
@@ -32,14 +34,20 @@
 
     };
 
+
+    //IMBD Removes the element when a new season gets loaded in so we have to reassign the eventlistener every time
+    const assignEventListener = () => {
+     document.querySelector('#bySeason').addEventListener('change', () => {
+         setTimeout(() => {
+             document.querySelector('.EpisodeList').remove();
+             outputNames();
+             assignEventListener();
+         },
+         1500)
+     });
+    }
+
+    assignEventListener();
     outputNames();
-
-
-
-
-
-
-
-
 
 })();
