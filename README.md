@@ -9,9 +9,9 @@ I did not make this foolproof as it is just something I quickly made. Test it be
 Using tampermonkey I made a script that outputs the episodes of a series on the season page to a list that you can easily copy and then paste inside the tool.
 
 For example, going to this link: https://www.imdb.com/title/tt0944947/episodes?season=1 outputs the list:
-Game of Thrones - S01E01 - Winter Is Coming __
-Game of Thrones - S01E02 - The Kingsroad __
-Game of Thrones - S01E03 - Lord Snow __
+Game of Thrones - S01E01 - Winter Is Coming\
+Game of Thrones - S01E02 - The Kingsroad\
+Game of Thrones - S01E03 - Lord Snow\
 ....
 
 You select this list and paste it within the tool in the New Episodes window
