@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Episode names
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.imdb.com/title/*/episodes?*
@@ -11,7 +11,7 @@
 
 (function() {
     'use strict';
-
+    let season = '01';
 
     const outputNames = () => {
 
@@ -26,7 +26,7 @@
 
          Array.prototype.forEach.call($episodes, (episodeName, key) => {
              const $listItem = document.createElement('li');
-             $listItem.textContent = ((`${title} - S01E${(key+1) >= 10 ? (key+1) : '0'+(key+1)} - ${episodeName.textContent}`).replace(/\/$/, "").replace(':', '').replace('.', '').replace('"', '').replace("'", ''));
+             $listItem.textContent = ((`${title} - S${season}E${(key+1) >= 10 ? (key+1) : '0'+(key+1)} - ${episodeName.textContent}`).replace(/\/$/, "").replace(':', '').replace('.', '').replace('"', '').replace("'", ''));
              $Temp.appendChild($listItem)
             });
 
@@ -39,6 +39,9 @@
     const assignEventListener = () => {
      document.querySelector('#bySeason').addEventListener('change', () => {
          setTimeout(() => {
+             let seasonNumber = parseInt(document.querySelector('#episode_top').textContent.replace(/\D/g,''));
+             if(seasonNumber >= 10) season = seasonNumber;
+             else season = `0${seasonNumber}`;
              document.querySelector('.EpisodeList').remove();
              outputNames();
              assignEventListener();
