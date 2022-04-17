@@ -37,7 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.Episode = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.OutputLabel = new System.Windows.Forms.Label();
             this.LoadingLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -57,7 +57,6 @@
             this.OutputWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputWindow.Enabled = false;
             this.OutputWindow.Location = new System.Drawing.Point(12, 522);
             this.OutputWindow.Name = "OutputWindow";
             this.OutputWindow.Size = new System.Drawing.Size(1290, 277);
@@ -135,14 +134,14 @@
             this.Episode.TabIndex = 8;
             this.Episode.Text = "New Episodes";
             // 
-            // label4
+            // OutputLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 494);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 25);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Output";
+            this.OutputLabel.AutoSize = true;
+            this.OutputLabel.Location = new System.Drawing.Point(12, 494);
+            this.OutputLabel.Name = "OutputLabel";
+            this.OutputLabel.Size = new System.Drawing.Size(69, 25);
+            this.OutputLabel.TabIndex = 9;
+            this.OutputLabel.Text = "Output";
             // 
             // LoadingLabel
             // 
@@ -161,7 +160,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1314, 811);
             this.Controls.Add(this.LoadingLabel);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.OutputLabel);
             this.Controls.Add(this.Episode);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -189,7 +188,7 @@
         private Label label1;
         private Label label2;
         private Label Episode;
-        private Label label4;
+        private Label OutputLabel;
         private Label LoadingLabel;
     }
 }

@@ -36,6 +36,8 @@ namespace Mass_file_renamer_
                         OutputWindow.Text+= file + Environment.NewLine;
                     }
 
+                    OutputLabel.Text = "Output: " + files.Length + " files found";
+
                     ChangeFiles.Enabled = true;
                 }
             }
@@ -46,10 +48,17 @@ namespace Mass_file_renamer_
 
         private void ChangeFiles_Click(object sender, EventArgs e)
         {
+
+            LoadingLabel.Text = "Loading...";
             OutputWindow.Text = "";
-            LoadingLabel.Text = "Loading...";   
             String[] newEpisodesNames = EpisodeInput.Text.Split('\n');
-            Array.Sort(newEpisodesNames, (x, y) => String.Compare(x, y));
+            Array.Sort(newEpisodesNames, (x, y) => {
+                Int32 oX = int.Parse((x.Split(' ')[2].Split('E')[1]));
+                Int32 oY = int.Parse((y.Split(' ')[2].Split('E')[1]));
+                if (oX == oY) return 0;
+                else if (oX > oY) return 1;
+                else return -1;
+            });
 
             if (newEpisodesNames.Length != files.Length)
             {
@@ -63,9 +72,6 @@ namespace Mass_file_renamer_
                 ChangeNames(newEpisodesNames);
             }
 
-
-
-           
         }
 
         private void ChangeNames(String[] newEpisodes)
@@ -101,5 +107,6 @@ namespace Mass_file_renamer_
             OutputWindow.Enabled = true;
 
         }
+
     }
 }
