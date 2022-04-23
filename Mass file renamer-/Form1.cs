@@ -53,8 +53,8 @@ namespace Mass_file_renamer_
             OutputWindow.Text = "";
             String[] newEpisodesNames = EpisodeInput.Text.Split('\n');
             Array.Sort(newEpisodesNames, (x, y) => {
-                Int32 oX = int.Parse((x.Split(' ')[2].Split('E')[1]));
-                Int32 oY = int.Parse((y.Split(' ')[2].Split('E')[1]));
+                Int32 oX = int.Parse((x.Split('-')[1].Split('E')[1]));
+                Int32 oY = int.Parse((y.Split('-')[1].Split('E')[1]));
                 if (oX == oY) return 0;
                 else if (oX > oY) return 1;
                 else return -1;
@@ -74,37 +74,43 @@ namespace Mass_file_renamer_
 
         }
 
-        private void ChangeNames(String[] newEpisodes)
+        private async void ChangeNames(String[] newEpisodes)
         {
             int i = 0;
-            foreach (string file in files)
+            try
             {
-                string filename = Path.GetFileNameWithoutExtension(file);
-                string newFilename;
-                try
+                foreach (string file in files)
                 {
-                    newFilename = file.Replace(filename, string.Join("", newEpisodes[i].Split(Path.GetInvalidFileNameChars())));
+                    string filename = Path.GetFileNameWithoutExtension(file);
+                    string newFilename;
+                    try
+                    {
+                        newFilename = file.Replace(filename, string.Join("", newEpisodes[i].Split(Path.GetInvalidFileNameChars())));
+                    }
+                    catch (Exception ex)
+                    {
+                        newFilename = file;
+                    }
+
+                    if (int.Parse(SeasonNumer.Text) != 1)
+                    {
+                        if (int.Parse(SeasonNumer.Text) > 10) newFilename = newFilename.Replace("S01", "S" + SeasonNumer.Text);
+                        else newFilename = newFilename.Replace("S01", "S0" + SeasonNumer.Text);
+                    }
+
+                    OutputWindow.Text += "Replaced: \"" + file + "\" With: \"" + newFilename + "\"" + Environment.NewLine;
+                    File.Move(file, newFilename);
+                    i++;
                 }
-                catch (Exception ex)
-                {
-                    newFilename = file;
-                }
-                
-                if (int.Parse(SeasonNumer.Text) != 1)
-                {
-                    if(int.Parse(SeasonNumer.Text) > 10) newFilename = newFilename.Replace("S01", "S" + SeasonNumer.Text);
-                    else newFilename = newFilename.Replace("S01", "S0" + SeasonNumer.Text);
-                }
 
-
-
-
-                OutputWindow.Text += "Replaced: \"" + file + "\" With: \"" + newFilename + "\"" + Environment.NewLine; 
-                File.Move(file, newFilename);
-                i ++;
+                await Task.WhenAll();
+                LoadingLabel.Text = "";
+                OutputWindow.Enabled = true;
             }
-            LoadingLabel.Text = "";
-            OutputWindow.Enabled = true;
+            catch(Exception ex)
+            {
+
+            }
 
         }
 
