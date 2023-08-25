@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Episode names
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      2.0
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.imdb.com/title/*/episodes?*
@@ -14,19 +14,20 @@
     let season = '01';
 
     const outputNames = () => {
+        console.log('test')
 
-        const title = document.querySelector('.aux-content-widget-2.links.subnav a').textContent;
+        const title = document.querySelector('h2[data-testid="subtitle"]').textContent;
 
-        const $episodes = document.querySelectorAll('.list.detail.eplist>div>div>strong>a');
+        const $episodes = document.querySelectorAll('h4>a');
 
-        const $main = document.querySelector('.subpage_title_block');
+        const $main = document.querySelector('.ipc-page-section');
         const $Temp = document.createElement('ul')
         $Temp.classList.add('EpisodeList')
 
 
          Array.prototype.forEach.call($episodes, (episodeName, key) => {
              const $listItem = document.createElement('li');
-             $listItem.textContent = ((`${title} - S${season}E${(key+1) >= 10 ? (key+1) : '0'+(key+1)} - ${episodeName.textContent}`).replace(/\/$/, "").replace(':', '').replace('.', '').replace('"', '').replace("'", ''));
+             $listItem.textContent = ((`${title} - S${season}E${(key+1) >= 10 ? (key+1) : '0'+(key+1)} - ${episodeName.textContent.split(' ∙ ')[1]}`).replace(/\/$/, "").replace(':', '').replace('.', '').replace('"', '').replace("'", ''));
              $Temp.appendChild($listItem)
             });
 
@@ -37,7 +38,7 @@
 
     //IMBD Removes the element when a new season gets loaded in so we have to reassign the eventlistener every time
     const assignEventListener = () => {
-     document.querySelector('#bySeason').addEventListener('change', () => {
+     document.querySelector('.ipc-tabs').addEventListener('change', () => {
          setTimeout(() => {
              let seasonNumber = parseInt(document.querySelector('#episode_top').textContent.replace(/\D/g,''));
              if(seasonNumber >= 10) season = seasonNumber;
